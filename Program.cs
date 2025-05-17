@@ -18,27 +18,35 @@ namespace FirstCalculator
                          .Append('-', 10);
             Console.WriteLine(borderBuilder);
 
-            Console.WriteLine("\nEnter two numbers split by comma ',': ");
+            Console.WriteLine("\nEnter two numbers split by comma ',' (e.g., 5,10): ");
             var input = Console.ReadLine();
 
+            // Check for empty input
             if (string.IsNullOrWhiteSpace(input))
             {
                 Console.WriteLine("\nThat was not a valid entry.");
-            }
-            var inputSplit = input.Split(',');
-
-            var numOne = 0;
-            var numTwo = 0;
-            try
-            {
-                numOne = Convert.ToInt32(inputSplit[0].Trim());
-                numTwo = Convert.ToInt32(inputSplit[1].Trim());
-            }
-            catch
-            {
-                Console.WriteLine("That was not a valid input.");
                 return;
             }
+
+            var inputSplit = input.Split(',');
+
+            //Created an int array, so I can pass to method array
+            var intNumbers = new int[inputSplit.Length];
+
+            for (int i = 0; i < inputSplit.Length; i++)
+            {
+                try
+                {
+                    // Trim each string before converting
+                    intNumbers[i] = Convert.ToInt32(inputSplit[i].Trim());
+                }
+                catch
+                {
+                    Console.WriteLine("Invalid input. Please enter only numbers.");
+                    return;
+                }
+            }
+
 
             Console.WriteLine("\n\t\t\tChoose what you would like to do.\n" +
                               "\nType Add to add the two numbers." +
@@ -57,16 +65,16 @@ namespace FirstCalculator
             switch (choice)
             {
                 case "add":
-                    Console.WriteLine(Operations.Add(numOne, numOne));
+                    Console.WriteLine(Operations.Add(intNumbers));
                     break;
                 case "subtract":
-                    Console.WriteLine(Operations.Subtract(numOne, numTwo));
+                    Console.WriteLine(Operations.Subtract(intNumbers));
                     break;
                 case "multiply":
-                    Console.WriteLine(Operations.multiply(numOne, numTwo));
+                    Console.WriteLine(Operations.multiply(intNumbers));
                     break;
                 case "divide":
-                    Console.WriteLine(Operations.Divide(numOne, numTwo));
+                    Console.WriteLine(Operations.Divide(intNumbers.Select(Convert.ToDouble).ToArray()));
                     break;
                 default:
                     Console.WriteLine("That is not a valid option");
