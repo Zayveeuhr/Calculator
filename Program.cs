@@ -27,9 +27,18 @@ namespace FirstCalculator
             }
             var inputSplit = input.Split(',');
 
-            var numOne = Convert.ToInt32(inputSplit[0].Trim());
-            var numTwo = Convert.ToInt32(inputSplit[1].Trim());
-
+            var numOne = 0;
+            var numTwo = 0;
+            try
+            {
+                numOne = Convert.ToInt32(inputSplit[0].Trim());
+                numTwo = Convert.ToInt32(inputSplit[1].Trim());
+            }
+            catch
+            {
+                Console.WriteLine("That was not a valid input.");
+                return;
+            }
 
             Console.WriteLine("\n\t\t\tChoose what you would like to do.\n" +
                               "\nType Add to add the two numbers." +
@@ -60,7 +69,7 @@ namespace FirstCalculator
                     Console.WriteLine(Operations.Divide(numOne, numTwo));
                     break;
                 default:
-                    Console.WriteLine();
+                    Console.WriteLine("That is not a valid option");
                     break;
             }
         }
